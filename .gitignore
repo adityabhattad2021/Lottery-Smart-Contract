@@ -4,3 +4,4 @@ coverage
 artifacts
 cache
 deployments
+coverage.json
