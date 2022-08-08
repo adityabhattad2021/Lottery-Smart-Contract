@@ -121,7 +121,7 @@ contract Lottery is VRFConsumerBaseV2, KeeperCompatibleInterface {
 	{
 
 		(bool upkeepNeeded, ) = checkUpkeep("");
-		if(!upkeepNeeded){
+		if(upkeepNeeded){
 			revert Lottery__UpkeepNotNeeded(
 				address(this).balance,
 				s_players.length,

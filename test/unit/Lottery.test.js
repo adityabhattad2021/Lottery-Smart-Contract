@@ -23,6 +23,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 				it("Initializes the lottery correctly.", async () => {
 					const lotteryState = await lottery.getLotteryState();
 					assert.equal(lotteryState.toString(), "0");
+					console.log(`Time interval ${interval}`);
 					assert.equal(
 						interval.toString(),
 						networkConfig[chainId]["lotteryTimeInterval"]

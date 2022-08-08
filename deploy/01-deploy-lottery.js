@@ -11,6 +11,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 	const { deployer } = await getNamedAccounts();
 	const chainId = network.config.chainId;
 	let vrfCoordinatorV2Address, subscriptionId;
+	
+
 
 	if (developmentChains.includes(network.name)) {
 		const vrfCoordinatorV2Mock = await ethers.getContract("VRFCoordinatorV2Mock");
@@ -28,6 +30,11 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 	const gasLane = networkConfig[chainId]["gasLane"]; // The gas lane to use, which specifies the maximum gas price to bump to.
 	const callBackGasLimit = networkConfig[chainId]["callBackGasLimit"];
 	const lotteryTimeInterval = networkConfig[chainId]["lotteryTimeInterval"];
+	console.log(`-------------1---------${entranceFeeToEnterTheLottery}------------------------------`);
+console.log(`-------------2---------${gasLane}------------------------------`);
+console.log(`-------------3---------${callBackGasLimit}------------------------------`);
+console.log(`-------------4---------${lotteryTimeInterval}------------------------------`);
+console.log(`-------------5---------${subscriptionId}------------------------------`);
 
 	const args = [
 		vrfCoordinatorV2Address,
@@ -38,6 +45,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 		lotteryTimeInterval,
 	];
 	log("---------------------------Deploying Lottery-----------------------------");
+
 
 	const lottery = await deploy("Lottery", {
 		from: deployer,
