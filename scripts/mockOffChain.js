@@ -18,7 +18,7 @@ async function main() {
         console.log(transectionRecipt.events[1].args);
         console.log(("-----------------------------------"));
         console.log(`Performed Upkeep with RequestId: ${requestId}`);
-        if (network.config.chainId = 31337) {
+        if (network.config.chainId = 1337) {
             await mockVRF(requestId,lottery)
         }
     } else {
@@ -28,7 +28,7 @@ async function main() {
 
 
 async function mockVRF(requestId, lottery) {
-    console.log("LocalHost detected, Deploying mockVRF");
+    console.log("LocalHost detected, mocking off chain.");
     const vrfCoordinatorV2Mock = await ethers.getContract("VRFCoordinatorV2Mock")
     await vrfCoordinatorV2Mock.fulfillRandomWords(requestId, lottery.address)
     console.log("Responded Successfully");

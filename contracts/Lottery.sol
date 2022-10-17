@@ -81,6 +81,7 @@ contract Lottery is VRFConsumerBaseV2, KeeperCompatibleInterface {
 		}
 		if(s_lotteryState==LotteryState.CALCULATING){
 			revert Lottery__CurrentlyClosed();
+		
 		}
 		s_players.push(payable(msg.sender));
 
@@ -107,9 +108,9 @@ contract Lottery is VRFConsumerBaseV2, KeeperCompatibleInterface {
 			bytes memory /* performData */
 		)	
 	{
-		bool isOpen = (LotteryState.OPEN == s_lotteryState);
+		bool isOpen = LotteryState.OPEN == s_lotteryState;
 		bool timePassed = ((block.timestamp - s_lastTimeStamp) > i_interval);
-		bool hasPlayers = (s_players.length>0);
+		bool hasPlayers = s_players.length>0;
 		bool hasBalance = address(this).balance>0;
 		upkeepNeeded = (isOpen && timePassed && hasPlayers && hasBalance);
 	}
@@ -121,7 +122,7 @@ contract Lottery is VRFConsumerBaseV2, KeeperCompatibleInterface {
 	{
 
 		(bool upkeepNeeded, ) = checkUpkeep("");
-		if(upkeepNeeded){
+		if(!upkeepNeeded){
 			revert Lottery__UpkeepNotNeeded(
 				address(this).balance,
 				s_players.length,

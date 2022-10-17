@@ -1,7 +1,7 @@
 // Ideally there should be one assert per "it" in "describe".
 
 const { assert, expect } = require("chai");
-const { getNamedAccounts, deployments, ethers, network } = require("hardhat");
+const { getNamedAccounts, deployments, ethers,network } = require("hardhat");
 const { developmentChains, networkConfig } = require("../../helper-hardhat-config");
 
 !developmentChains.includes(network.name)
@@ -77,6 +77,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 
 					assert(upkeepNeeded);
 				});
+				
 			});
 			describe("performUpKeep", function () {
 				it("It will be reverted when checkUpKeep is false.", async () => {
@@ -181,7 +182,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 						console.log(transectionRecipt.events);
 						console.log(`----------------------------------------------`);
 						const winnerInitialBalance = await accounts[1].getBalance();
-
+						
 						await vrfCoordinatorV2Mock.fulfillRandomWords(
 							transectionRecipt.events[1].args.requestId,
 							lottery.address

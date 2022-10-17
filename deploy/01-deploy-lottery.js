@@ -4,11 +4,14 @@ require("dotenv").config();
 
 const { verify } = require("../utils/verify");
 
-const VRF_SUBSCRIPTION_FUND_AMOUNT = "1000000000000000000000";
+const VRF_SUBSCRIPTION_FUND_AMOUNT = ethers.utils.parseEther("30");
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
 	const { deploy, log } = deployments;
 	const { deployer } = await getNamedAccounts();
+    console.log(`------Deployer is ${deployer}------------`);
+
+
 	const chainId = network.config.chainId;
 	let vrfCoordinatorV2Address, subscriptionId;
 	
@@ -30,7 +33,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 	const gasLane = networkConfig[chainId]["gasLane"]; // The gas lane to use, which specifies the maximum gas price to bump to.
 	const callBackGasLimit = networkConfig[chainId]["callBackGasLimit"];
 	const lotteryTimeInterval = networkConfig[chainId]["lotteryTimeInterval"];
-	console.log(`-------------1---------${entranceFeeToEnterTheLottery}------------------------------`);
+	console.log(`-------------1---------${ethers.utils.formatUnits(entranceFeeToEnterTheLottery,"ether")}------------------------------`);
 console.log(`-------------2---------${gasLane}------------------------------`);
 console.log(`-------------3---------${callBackGasLimit}------------------------------`);
 console.log(`-------------4---------${lotteryTimeInterval}------------------------------`);
@@ -60,6 +63,14 @@ console.log(`-------------5---------${subscriptionId}---------------------------
 		log("--------------------------------------------------------");
 	}
 	log("---------------------------Deployed  Lottery-----------------------------");
+
+
+
+	log("To run scripts use this command in shell:")
+    const networkName = network.name == "hardhat" ? "localhost" : network.name
+    log(`yarn hardhat run scripts/enterRaffle.js --network ${networkName}`)
+    log("----------------------------------------------------")
+	
 
 };
 
